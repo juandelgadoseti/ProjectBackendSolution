@@ -2,11 +2,12 @@
 using APIProjectBackend.EntititesDto;
 using APIProjectBackend.Service.Contracts;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIProjectBackend.Controllers
 {
-
+    [Authorize]
     [ApiController]
     [Route("project")]
     public class ProjectController : BaseController<Project, ProjectDto>
