@@ -15,5 +15,13 @@ namespace APIProjectBackend.Controllers
         {
             _taskService = taskService;
         }
+
+        [HttpGet("byProjectId/{projectId}")]
+        public async Task<ActionResult<List<TaskDto>>> GetByProjectId(Guid projectId)
+        {
+            var tasks = await _taskService.GetByProjectIdAsync(projectId);
+            var dtos = _mapper.Map<List<TaskDto>>(tasks);
+            return Ok(dtos);
+        }
     }
 }

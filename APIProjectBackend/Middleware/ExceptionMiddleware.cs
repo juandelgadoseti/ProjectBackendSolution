@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using APIProjectBackend.Exceptions;
+using System.Net;
 using System.Text.Json;
 
 namespace APIProjectBackend.Middleware
@@ -29,7 +30,15 @@ namespace APIProjectBackend.Middleware
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var code = HttpStatusCode.InternalServerError; 
+            HttpStatusCode code = exception switch
+            {
+                NotFoundException => HttpStatusCode.NotFound,
+                ValidationException => HttpStatusCode.BadRequest,
+                UpdateConflictException => HttpStatusCode.Conflict,
+                DeleteException => HttpStatusCode.Conflict,
+                RepositoryException => HttpStatusCode.InternalServerError,
+                _ => HttpStatusCode.InternalServerError
+            };
             var result = JsonSerializer.Serialize(new
             {
                 error = exception.Message,
