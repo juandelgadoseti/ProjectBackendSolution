@@ -35,8 +35,18 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 //    options.AddPolicy("BasicRead", policy => policy.RequireAuthenticatedUser().RequireClaim("Permission", "Read")); 
 //});
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
 
 var app = builder.Build();
+app.UseCors("AllowFrontend");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

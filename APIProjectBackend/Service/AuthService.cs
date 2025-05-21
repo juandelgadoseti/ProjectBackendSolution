@@ -1,4 +1,6 @@
+using APIProjectBackend.Data;
 using APIProjectBackend.Entities;
+using APIProjectBackend.EntityFrameworkRepository.Contracts;
 using APIProjectBackend.Service.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,12 +11,12 @@ using System.Text;
 
 namespace APIProjectBackend.Service
 {
-    public class AuthService: IAuthService
+    public class AuthService: BaseService<User>, IAuthService
     {
         private readonly DbContext _context;
         private readonly IConfiguration _configuration;
 
-        public AuthService(DbContext context, IConfiguration configuration) 
+        public AuthService(IBaseEntityFrameworkRepository<User> repository, IConfiguration configuration, AppDbContext context) : base(repository) 
         {
             _context = context;
             _configuration = configuration;

@@ -2,7 +2,7 @@
 
 namespace APIProjectBackend.Service.Contracts
 {
-    public interface IAuthService 
+    public interface IAuthService : IBaseService<User>
     {
         public User? Login(string correo, string password);
         public string GenerateJwtToken(User user);
