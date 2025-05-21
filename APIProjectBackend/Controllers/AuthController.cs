@@ -26,7 +26,7 @@ namespace APIProjectBackend.Controllers
                 return Unauthorized("Credenciales inválidas");
 
             var token = _authService.GenerateJwtToken(user);
-            return Ok(new { token });
+            return Ok(new { token, user.Id });
         }
     }
 }
